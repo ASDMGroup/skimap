@@ -12,6 +12,21 @@ from .Point2D import Point2D as Point2D
 #Create a list class to define properties of list objects containing sets of points
 class GeomList(list):
     """A list class which contains Point2D objects."""
+    
+    def create(self,name):
+        name=self.name
+        #Access Oracle from Python and make a database connection
+        conn = cx_Oracle.connect("student/train@geosgen")
+    #prepare and execute a query and display the results using a simple loop which returns each row in turn
+        c = conn.cursor()
+        c.execute("SELECT * FROM Resort where Resort_ID=" + name +"and )
+        for row in c:
+	    #display find data circles
+	    print ("<circle class='circle-show-info' data-info='<div><p>FIND_ID: ",row[0],"</p><p>TYPE: ",row[3],"</p><p>DEPTH: ",row[4],"</p><p>DESCRIPTION: ",row[5],"</p></div>' cx=",row[1]," cy=",row[2]," r='0.3' stroke='rgba(254,67,101,.5)' stroke-width='0.01' fill='rgba(252,157,154,1)'/>")
+	    #mark the code of each find
+	    print ("<text x=",row[1]-0.20," y=",row[2]+0.25," font-family='Verdana' font-size='0.5' fill='#336699'transform='translate (0,",row[2]*2,")scale(-1, 1) rotate(180)'>",row[0],"</text>")
+        conn.close()
+    
     def dataextract(self,filename):
         """This method extracts data from the file specified in the method's argument into the GeomList as a series of Point2D objects.
 
