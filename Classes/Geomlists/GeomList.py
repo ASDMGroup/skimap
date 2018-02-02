@@ -80,7 +80,34 @@ class GeomList(list):
         """
         for i in self:
             i.__repr__
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
 
+
+    def create(self,name):
+        name=self.name
+        #Access Oracle from Python and make a database connection
+        conn = cx_Oracle.connect("student/train@geosgen")
+    #prepare and execute a query and display the results using a simple loop which returns each row in turn
+        c = conn.cursor()
+        c.execute("SELECT * FROM Resort,Node,Runs_and_lifts where Rosort=name")
+        for row in c:
+	    #display find data circles
+	    print ("<circle class='circle-show-info' data-info='<div><p>FIND_ID: ",row[0],"</p><p>TYPE: ",row[3],"</p><p>DEPTH: ",row[4],"</p><p>DESCRIPTION: ",row[5],"</p></div>' cx=",row[1]," cy=",row[2]," r='0.3' stroke='rgba(254,67,101,.5)' stroke-width='0.01' fill='rgba(252,157,154,1)'/>")
+	    #mark the code of each find
+	    print ("<text x=",row[1]-0.20," y=",row[2]+0.25," font-family='Verdana' font-size='0.5' fill='#336699'transform='translate (0,",row[2]*2,")scale(-1, 1) rotate(180)'>",row[0],"</text>")
+        conn.close()
+
+        
+    
     def plotsetup(self,title,other):
         fig, ax = plt.subplots()
         plt.title(title)
